@@ -300,29 +300,6 @@ bool Polynomial::operator!= (const Polynomial& pol) const {
     return true;
 }
 
-bool Polynomial::operator< (const Polynomial& pol) const {
-    if (this->degree < pol.degree) {
-        return true;
-    }
-    else if (this->degree == pol.degree) {
-        for (size_t i = 0; i < this->size; ++i) {
-            if (this->coefficient[i] > pol.coefficient[i])
-                return false;
-        }
-        return true;
-    }
-
-    return false;
-}
-
-bool Polynomial::operator> (const Polynomial& pol) const {
-    if (*this < pol) {
-        return false;
-    }
-
-    return true;
-}
-
 std::ostream& operator<< (std::ostream& os, const Polynomial& pol) {
     if (pol.size != 0)
     {
