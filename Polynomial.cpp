@@ -20,9 +20,9 @@ Polynomial::Polynomial(const size_t deg)
 }
 
 Polynomial::Polynomial(const Polynomial& copy) {
-    this->coefficient = new double[copy.size] {0};
-    this->degree = copy.degree;
-    this->size = copy.size;
+    this->coefficient   = new double[copy.size] {0};
+    this->degree        = copy.degree;
+    this->size          = copy.size;
 
     for (size_t i = 0; i < copy.size; ++i) {
         this->coefficient[i] = copy.coefficient[i];
@@ -30,12 +30,12 @@ Polynomial::Polynomial(const Polynomial& copy) {
 }
 
 Polynomial::Polynomial(Polynomial&& moved) noexcept {
-    this->coefficient = moved.coefficient;
-    this->degree = moved.degree;
-    this->size = moved.size;
-    moved.coefficient = nullptr;
-    moved.degree = 0;
-    moved.size = 0;
+    this->coefficient   = moved.coefficient;
+    this->degree        = moved.degree;
+    this->size          = moved.size;
+    moved.coefficient   = nullptr;
+    moved.degree        = 0;
+    moved.size          = 0;
 }
 
 Polynomial::Polynomial(std::initializer_list<double> ilist)
@@ -55,9 +55,9 @@ Polynomial::~Polynomial() noexcept {
 Polynomial& Polynomial::operator= (const Polynomial& copy) {
     if (this != &copy) {
         delete[] this->coefficient;
-        this->coefficient = new double[copy.size];
-        this->degree = copy.degree;
-        this->size = copy.size;
+        this->coefficient   = new double[copy.size];
+        this->degree        = copy.degree;
+        this->size          = copy.size;
 
         for (size_t i = 0; i < copy.size; ++i) {
             this->coefficient[i] = copy.coefficient[i];
@@ -70,12 +70,12 @@ Polynomial& Polynomial::operator= (const Polynomial& copy) {
 Polynomial& Polynomial::operator= (Polynomial&& moved) {
     if (this != &moved) {
         delete[] this->coefficient;
-        this->coefficient = moved.coefficient;
-        this->degree = moved.degree;
-        this->size = moved.size;
-        moved.coefficient = nullptr;
-        moved.degree = 0;
-        moved.size = 0;
+        this->coefficient   = moved.coefficient;
+        this->degree        = moved.degree;
+        this->size          = moved.size;
+        moved.coefficient   = nullptr;
+        moved.degree        = 0;
+        moved.size          = 0;
     }
 
     return *this;
@@ -83,9 +83,9 @@ Polynomial& Polynomial::operator= (Polynomial&& moved) {
 
 Polynomial& Polynomial::operator= (std::initializer_list<double> ilist) {
     delete[] this->coefficient;
-    this->coefficient = new double[ilist.size()];
-    this->degree = ilist.size() - 1;
-    this->size = ilist.size();
+    this->coefficient   = new double[ilist.size()];
+    this->degree        = ilist.size() - 1;
+    this->size          = ilist.size();
 
     std::initializer_list<double>::iterator iter = ilist.begin();
     for (size_t i = 0; i < ilist.size(); ++i) {
@@ -151,9 +151,9 @@ Polynomial Polynomial::operator* (const double number) const {
 }
 
 Polynomial Polynomial::operator/ (const Polynomial& pol) const {
-    Polynomial temp = Polynomial(*this);
-    int result_degree = temp.degree - pol.degree;
-    int result_size = result_degree + 1;
+    Polynomial temp     = Polynomial(*this);
+    int result_degree   = temp.degree - pol.degree;
+    int result_size     = result_degree + 1;
     Polynomial result(result_degree);
 
     for (int i = 0; i < result_size; ++i) {
@@ -241,8 +241,8 @@ Polynomial& Polynomial::operator*= (const double number) {
 }
 
 Polynomial& Polynomial::operator/= (const Polynomial& pol) {
-    int result_degree = this->degree - pol.degree;
-    int result_size = result_degree + 1;
+    int result_degree   = this->degree - pol.degree;
+    int result_size     = result_degree + 1;
     Polynomial result(result_degree);
 
     for (int i = 0; i < result_size; ++i) {
