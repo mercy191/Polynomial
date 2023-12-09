@@ -15,6 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PolynomialMain.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="Polynomial.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
