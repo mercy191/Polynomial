@@ -150,35 +150,6 @@ Polynomial Polynomial::operator* (const double number) const {
     return result;
 }
 
-Polynomial Polynomial::operator/ (const Polynomial& pol) const {
-    Polynomial temp     = Polynomial(*this);
-    int result_degree   = temp.degree - pol.degree;
-    int result_size     = result_degree + 1;
-    Polynomial result(result_degree);
-
-    for (int i = 0; i < result_size; ++i) {
-        result.coefficient[result_size - i - 1] = (temp.coefficient[temp.size - i - 1] / pol.coefficient[pol.size - 1]);
-        for (int j = 0; j < pol.size; ++j) {
-            temp.coefficient[temp.size - j - i - 1] -= (pol.coefficient[pol.size - j - 1] * result.coefficient[result_size - i - 1]);
-        }
-    }
-
-    int temp_degree = temp.degree;
-    for (int i = temp.size - 1; i >= 0; --i) {
-        if (temp.coefficient[i] != 0.0)
-            break;
-        else
-            --temp_degree;
-    }
-    temp.degree = temp_degree;
-
-    if (temp.degree != 0) {
-        std::cout << "Ostatok: " << temp << std::endl;
-    }
-
-    return result;
-}
-
 Polynomial Polynomial::operator/ (const double number) const {
     if (number == 0)
         throw std::runtime_error("Undefined behavior: division by zero");
@@ -240,34 +211,6 @@ Polynomial& Polynomial::operator*= (const double number) {
     return *this;
 }
 
-Polynomial& Polynomial::operator/= (const Polynomial& pol) {
-    int result_degree   = this->degree - pol.degree;
-    int result_size     = result_degree + 1;
-    Polynomial result(result_degree);
-
-    for (int i = 0; i < result_size; ++i) {
-        result.coefficient[result_size - i - 1] = (this->coefficient[this->size - i - 1] / pol.coefficient[pol.size - 1]);
-        for (int j = 0; j < pol.size; ++j) {
-            this->coefficient[this->size - j - i - 1] -= (pol.coefficient[pol.size - j - 1] * result.coefficient[result_size - i - 1]);
-        }
-    }
-
-    int temp_degree = this->degree;
-    for (int i = this->size - 1; i >= 0; --i) {
-        if (this->coefficient[i] != 0.0)
-            break;
-        else
-            --temp_degree;
-    }
-    this->degree = temp_degree;
-
-    if (this->degree != 0) {
-        std::cout << "Ostatok: " << *this << std::endl;
-    }
-
-    return *this = std::move(result);
-}
-
 Polynomial& Polynomial::operator/= (const double number) {
     if (number == 0)
         throw std::runtime_error("Undefined behavior: division by zero");
@@ -298,6 +241,35 @@ bool Polynomial::operator!= (const Polynomial& pol) const {
     }
 
     return true;
+}
+
+std::pair<Polynomial, Polynomial> Polynomial::operator/ (const Polynomial& pol) const {
+    Polynomial temp = Polynomial(*this);
+    int result_degree = temp.degree - pol.degree;
+    int result_size = result_degree + 1;
+    Polynomial result(result_degree);
+
+    for (int i = 0; i < result_size; ++i) {
+        result.coefficient[result_size - i - 1] = (temp.coefficient[temp.size - i - 1] / pol.coefficient[pol.size - 1]);
+        for (int j = 0; j < pol.size; ++j) {
+            temp.coefficient[temp.size - j - i - 1] -= (pol.coefficient[pol.size - j - 1] * result.coefficient[result_size - i - 1]);
+        }
+    }
+
+    int temp_degree = temp.degree;
+    for (int i = temp.size - 1; i >= 0; --i) {
+        if (temp.coefficient[i] != 0.0)
+            break;
+        else
+            --temp_degree;
+    }
+    temp.degree = temp_degree;
+
+    if (temp.degree != 0) {
+        return std::make_pair(result, temp);
+    }
+
+    return std::make_pair(result, Polynomial());
 }
 
 std::ostream& operator<< (std::ostream& os, const Polynomial& pol) {
