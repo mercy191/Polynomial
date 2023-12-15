@@ -273,8 +273,7 @@ std::pair<Polynomial, Polynomial> Polynomial::operator/ (const Polynomial& pol) 
 }
 
 std::ostream& operator<< (std::ostream& os, const Polynomial& pol) {
-    if (pol.size != 0)
-    {
+    if (pol.size != 0) {
         os << pol.coefficient[0];
         for (size_t i = 1; i < pol.size; ++i) {
             if (pol.coefficient[i] > 0) {
@@ -283,10 +282,10 @@ std::ostream& operator<< (std::ostream& os, const Polynomial& pol) {
             else if (pol.coefficient[i] < 0) {
                 os << " - " << -pol.coefficient[i] << "x^" << i;
             }
-        }
-
-        return os;
+        } 
     }
+
+    return os;
 }
 
 std::istream& operator>> (std::istream& is, Polynomial& pol) {
